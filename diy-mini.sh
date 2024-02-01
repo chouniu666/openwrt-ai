@@ -101,6 +101,8 @@ sed -i 's/"admin"/"admin", "services"/g' feeds/luci/applications/luci-app-docker
 sed -i 's/"admin"/"admin", "services"/g; s/admin\//admin\/services\//g' feeds/luci/applications/luci-app-dockerman/luasrc/model/cbi/dockerman/*.lua
 sed -i 's/admin\//admin\/services\//g' feeds/luci/applications/luci-app-dockerman/luasrc/view/dockerman/*.htm
 sed -i 's|admin\\|admin\\/services\\|g' feeds/luci/applications/luci-app-dockerman/luasrc/view/dockerman/container.htm
+# 网卡 pppoe
+sed -i '/uci commit network/d; /exit 0/d' package/lean/default-settings/files/zzz-default-settings && echo -e "uci set network.wan.proto='pppoe'\nuci set network.wan.username='18265306145'\nuci set network.wan.password='123123'\nuci set network.wan.ifname='eth1'\nuci set network.lan.ifname='eth0 eth2'\nuci commit network\nexit 0" >> package/lean/default-settings/files/zzz-default-settings
 
 # 调整 ZeroTier 到 服务 菜单
 # sed -i 's/vpn/services/g; s/VPN/Services/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
